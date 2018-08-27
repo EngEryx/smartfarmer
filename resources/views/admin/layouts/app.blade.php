@@ -139,6 +139,13 @@
                         <span>Payments</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('admin.feedback')}}">
+                        <i class="fa fa-comment-o"></i>
+                        <span>Customer Feedback</span>
+                    </a>
+                </li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -150,6 +157,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             @yield('page-header')
+            @if(session('status'))
+                <div class="alert alert-info">
+                    {{session()->get('status')}}
+                </div>
+            @endif
             {{--<h1>--}}
                 {{--Page Header--}}
                 {{--<small>Optional description</small>--}}
@@ -194,6 +206,8 @@
 <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin/js/adminlte.min.js')}}"></script>
-
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+<script src="{{asset('js/axios.min.js')}}"></script>
+@yield('javascripts')
 </body>
 </html>

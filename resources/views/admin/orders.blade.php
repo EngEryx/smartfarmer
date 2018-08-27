@@ -13,6 +13,9 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">All Product Sales</h3>
+                    <div class="box-tools pull-right">
+                        <a href="{{route('admin.print-orders')}}" class="btn btn-success btn-xs"><i class="fa fa-print"></i> Print Report</a>
+                    </div>
                 </div>
                 <div class="box-body">
                     <table class="table table-striped table-bordered">
@@ -24,28 +27,35 @@
                             <th>Sale Status</th>
                             <th>Cost</th>
                             <th>Order Date</th>
-                            <th>Created On</th>
                         </tr>
                         </thead>
                         <tbody>
                         @if($orders->count() == 0)
                             <tr class="text-center">
-                                <td colspan="7">No Sales available</td>
+                                <td colspan="7">No Orders available</td>
                             </tr>
                         @else
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{$order->id}}</td>
                                     <td>{{$order->customer_name}}</td>
-                                    <td>{{$order->salonitem_name}}</td>
+                                    <td>
+                                        <ul>
+                                            @foreach($order->items as $cart_item)
+                                                <li>
+                                                    {{$cart_item['item']['name'] .' - '.($cart_item['item']['cost'].' x '.(int)$cart_item['quantity'])}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
                                     <td>{!! $order->status_text !!}</td>
-                                    <td>{{$order->price_text}}</td>
+                                    <td>{{$order->total_cost}}</td>
                                     <td>
                                         {{ $order->created_at }}
                                     </td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary btn-xs"> <i class="fa fa-eye"></i> View Order</a>
-                                    </td>
+                                    {{--<td>--}}
+                                    {{--<a href="#" class="btn btn-xs"> <i class="fa fa-eye"></i> View Order</a>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         </tbody>

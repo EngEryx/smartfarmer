@@ -47,47 +47,72 @@
                             </div>
                         @endif
                         <table class="table table-striped table-bordered">
-                            <tr>
-                                <th>Name</th>
-                                <td>{{$order->product_name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Short Description</th>
-                                <td>{{$order->product->item_description}}</td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td>{!! $order->status_text !!}</td>
-                            </tr>
-                            @if($order->status == 0)
                                 <tr>
-                                    <th>How To Pay</th>
+                                    <th>Name</th>
+                                    <td>{{$order->salonitem_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Items Ordered</th>
                                     <td>
-                                        <ol class="center">
-                                            <li>Go to M-PESA on your Phone</li>
-                                            <li>Select Send Money</li>
-                                            <li>Enter phone number : <strong>0700xxxx</strong></li>
-                                            <li>Enter the amount, {!! $order->price_text !!}</li>
-                                            <li>Enter your M-PESA PIN and send</li>
-                                            <li>
-                                                You will receive a confirmartion SMS from Us
-                                            </li>
-
-                                        </ol>
+                                        <ul>
+                                            @php $has_product = false @endphp
+                                            @php $has_service = false @endphp
+                                            @foreach($order->items as $cart_item)
+                                                <li>
+                                                    @php
+                                                        if($cart_item['type']==1 && !$has_service){
+                                                        $has_product = true;
+                                                        }else{
+                                                        $has_service = true;
+                                                        }
+                                                    @endphp
+                                                    {{$cart_item['item']['name'] .' - '.($cart_item['item']['cost'].' x '.(int)$cart_item['quantity'])}}
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </td>
                                 </tr>
                                 <tr>
-                                    {{--<th></th>--}}
-                                    <td colspan="2">Refresh page to check if the payment has been processed.</td>
+                                    <th>Status</th>
+                                    <td>{!! $order->status_text !!}</td>
                                 </tr>
+                                @if($order->status == 0)
+                                    <tr>
+                                        <th>How To Pay</th>
+                                        <td>
+                                            <ol class="center">
+                                                <li>Go to M-PESA on your Phone</li>
+                                                <li>Select Send Money</li>
+                                                <li>Enter phone number : <strong>0700xxxx</strong></li>
+                                                <li>Enter the amount, KSh.<strong>{!! $order->total_cost !!}</strong></li>
+                                                <li>Enter your M-PESA PIN and send</li>
+                                                <li>
+                                                    You will receive a confirmartion SMS from Us
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Cost</th>
+                                        <td>KSh. {{$order->total_cost}}</td>
+                                    </tr>
+                                    @if($has_product && !$has_service)
+                                        <tr>
+                                            <th>Delivery Location
+                                            <td>{{auth()->user()->location}}</td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        {{--<th></th>--}}
+                                        <td colspan="2">Refresh page to check if the payment has been processed.</td>
+                                    </tr>
                                 @else
-                                <tr>
-                                    {{--<th></th>--}}
-                                    <td colspan="2">Payment Received. Confirmation Number: <strong>{{$order->payment->receipt_no}}</strong></td>
-                                </tr>
-                            @endif
-
-                        </table>
+                                    <tr>
+                                        {{--<th></th>--}}
+                                        <td colspan="2">Payment Received. Confirmation Number: <strong>{{$order->payment->receipt_no}}</strong></td>
+                                    </tr>
+                                @endif
+                            </table>
                     </div>
                 </div>
             </div>

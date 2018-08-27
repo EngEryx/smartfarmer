@@ -7,6 +7,8 @@ use App\Payment;
 use App\Product;
 use App\User;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -67,5 +69,60 @@ class AdminController extends Controller
     {
         $orders = Order::all();
         return view('admin.orders')->with('orders',$orders);
+    }
+
+    public function deleteProduct(Product $product)
+    {
+        try {
+            $product->delete();
+        } catch (\Exception $e) {
+        }
+        return response()->json(['success' => true]);
+    }
+
+    public function editProduct(Product $product)
+    {
+        return view('admin.products-edit', compact('product'));
+    }
+
+    public function saveEditProduct(Product $product, Request $request)
+    {
+        $this->validate($request,[
+            'name' => 'required|unique:products,id,'.$product->id.'|max:191',
+            'item_description' => 'required|max:191',
+            'full_description' => 'required',
+            'cost' => 'required|numeric',
+            'category_type' => 'required',
+            'img_url' => 'file|image',
+        ]);
+
+        $data = $request->all();
+
+        if($request->hasFile('img_url')){
+            $file_name = time().'.'.$request->file('img_url')->getClientOriginalExtension();
+            $request->file('img_url')->move(public_path('uploads'),$file_name);
+            $url = url('/uploads').'/'.$file_name;
+            $data = $request->except('img_url');
+            $data['img_url'] = $url;
+        }
+
+        $product->update($data);
+
+        session()->flash('status',"Product updated successfully!");
+
+        return redirect()->route("admin.products")->withStatus('Product updated successfully!');
+    }
+
+    public function downloadOrders()
+    {
+        $options = new Options();
+        $options->setIsRemoteEnabled(true);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml(view('print.order-report')->with([
+            'orders' => Order::all()
+        ]));
+        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->render();
+        return $dompdf->stream(Carbon::today()->format('d M Y'));
     }
 }

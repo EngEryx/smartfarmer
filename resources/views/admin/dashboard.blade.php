@@ -84,15 +84,25 @@
                                     <tr>
                                         <td>{{$order->id}}</td>
                                         <td>{{$order->customer_name}}</td>
-                                        <td>{{$order->salonitem_name}}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach($order->items as $cart_item)
+                                                    <li>
+                                                        {{$cart_item['item']['name'] .' - '.($cart_item['item']['cost'].' x '.(int)$cart_item['quantity'])}}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
                                         <td>{!! $order->status_text !!}</td>
-                                        <td>{{$order->price_text}}</td>
-                                        <td>
-                                            {{ $order->created_at }}
-                                        </td>
-                                        <td>
-                                            <a href="{{route('admin.orders')}}" class="btn btn-primary btn-xs"> <i class="fa fa-eye"></i> View Order</a>
-                                        </td>
+                                        <td>KSh.{{$order->total_cost}}</td>
+                                        <td>{{$order->created_at}}</td>
+                                        <td>{{$order->created_at}}</td>
+                                        {{--<td>--}}
+                                        {{--{{ $order->created_at }}--}}
+                                        {{--</td>--}}
+                                        {{--<td>--}}
+                                        {{--<a href="#" class="btn btn-xs"> <i class="fa fa-eye"></i> View Order</a>--}}
+                                        {{--</td>--}}
                                     </tr>
                                 @endforeach
                             </tbody>

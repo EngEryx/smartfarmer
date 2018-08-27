@@ -40,7 +40,10 @@ class LoginController extends Controller
     public function authenticated()
     {
         if(auth()->user()->user_type ==0){
+            session()->flash('status','You have been logged in successfully as Admin!');
             return redirect()->route('admin.dashboard');
+        }else{
+            session()->flash('status','Welcome back '.auth()->user()->name);
         }
     }
 }

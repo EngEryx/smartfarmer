@@ -59,6 +59,9 @@
                 <li>
                     <a href="{{url('admin/payments')}}"><i class="fa fa-money"></i> Payments</a>
                 </li>
+                <li>
+                    <a href="{{url('admin/feedbacks')}}"><i class="fa fa-comment-o"></i> Feedback</a>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

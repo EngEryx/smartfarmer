@@ -43,9 +43,9 @@
                                     <td>{{$product->item_type_text}}</td>
                                     <td>{{$product->short_description}}</td>
                                     <td>{{$product->price_text}}</td>
-                                    <td>{{$product->created_at }}</td>
+                                    <td>{{ $product->created_at }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-info btn-xs"> <i class="fa fa-eye"></i> View</a>
+                                        {!! $product->action_buttons !!}
                                     </td>
                                 </tr>
                             @endforeach
@@ -56,4 +56,38 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascripts')
+    <script>
+        function deleteProduct(id,url){
+            console.log(id);
+            swal({
+                title: "Are you sure?",
+                text: "The record will be deleted permanently.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        axios.post(url)
+                            .then(res => {
+                                swal("Poof! The record has been deleted!", {
+                                    icon: "success",
+                                });
+                                setTimeout(function(){
+                                    window.location.reload();
+                                }, 2000);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                swal("The record could not be deleted. Try again.");
+                            });
+                    } else {
+                        swal("Your record is safe!");
+                    }
+                });
+        }
+    </script>
 @endsection

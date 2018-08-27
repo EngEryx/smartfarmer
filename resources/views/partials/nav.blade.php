@@ -17,19 +17,39 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                    @if(auth()->guest())
-                        <a class="nav-link" href="{{url('login')}}">
-                            Login
-                        </a>
-                        <a class="nav-link" href="{{url('register')}}">
-                            Register
-                        </a>
-                        @else
-                        <a class="nav-link" href="{{url('home')}}">
-                             View Dashboard - {{auth()->user()->name}}
-                        </a>
-                    @endif
+                    <a class="nav-link" href="{{url('machinery')}}">
+                        Machinery
+                    </a>
                 </li>
+                @if(auth()->check())
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{route('feedback')}}">
+                            Feedback
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    @if(auth()->user()->user_type == 0)
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{url('admin/dashboard')}}">
+                                Admin Dashboard
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    @endif
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{route('frontend.booking.view-cart')}}">
+                            View Cart (
+                            @if(session()->exists('customer_cart'.auth()->user()->id))
+                                {{ count(session()->get('customer_cart'.auth()->user()->id)) }}
+                            @else
+                                0
+                            @endif
+
+                            )
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

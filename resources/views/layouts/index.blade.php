@@ -22,7 +22,11 @@
 
 <!-- Navigation -->
 @include('partials.nav')
-
+@if(session('status'))
+    <div class="alert alert-primary alert-dismissible fade show" role="alert" style="position:fixed; z-index: 99999; left:40%;">
+        {{ session()->get('status')}}
+    </div>
+@endif
 @yield('content')
 
 @include('partials.footer')

@@ -8,6 +8,10 @@ class Order extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'items' => 'array'
+    ];
+
     public function payment()
     {
         return $this->hasOne(Payment::class,'booking_id','id');
@@ -29,12 +33,10 @@ class Order extends Model
 
     public function getProductNameAttribute()
     {
-        return $this->product->name;
     }
 
     public function getPriceTextAttribute()
     {
-        return $this->product->price_text;
     }
 
     public function getStatusTextAttribute()

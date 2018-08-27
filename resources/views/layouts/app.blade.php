@@ -80,6 +80,12 @@
                                 Seeds
                             </a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{url('fertilisers')}}">
+                                Machinery
+                            </a>
+                        </li>
+
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -88,7 +94,25 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('frontend.order.view-cart')}}">
+                                    My Cart (
+                                    @if(session()->exists('customer_cart'.auth()->user()->id))
+                                        {{ count(session()->get('customer_cart'.auth()->user()->id)) }}
+                                    @else
+                                        0
+                                    @endif
 
+                                    )
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('feedback')}}">
+                                    Feedback
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -99,6 +123,10 @@
                                     <a href="{{route('admin.dashboard')}}" class="dropdown-item">
                                         Admin Dashboard
                                     </a>
+                                        @else
+                                        <a href="{{url('home')}}" class="dropdown-item">
+                                            My Dashboard
+                                        </a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -111,12 +139,17 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
-
+        @if(session('status'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert" style="position:fixed; z-index: 99999; left:40%;">
+                {{ session()->get('status')}}
+            </div>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>

@@ -21,4 +21,9 @@ class IndexController extends Controller
     {
         return view('fertilisers')->with('products',Product::where(['category_type'=>2])->get());
     }
+
+    public function machinery()
+    {
+        return view('machinery')->with('products',Product::where(['category_type'=>3])->get());
+    }
 }
