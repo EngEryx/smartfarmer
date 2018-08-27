@@ -55,6 +55,7 @@ class GatewayAPI extends Controller
 		switch ($action->type)
 		{
 		    case Gateway\EnvayaSMS::ACTION_INCOMING:
+		        $events = array();
 		        $type = strtoupper($action->message_type);
 		        Log::info("MNET Received: {$type} from: {$action->from} message: {$action->message}");
 		        if($action->from == 'MPESA' || Str::endsWith($action->from,'743169027')){

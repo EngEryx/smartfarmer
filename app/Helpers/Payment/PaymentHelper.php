@@ -56,7 +56,6 @@ class PaymentHelper
 
             #create transaction if user is found
             if (!is_null($person)){
-
                 #query the latest customer orders.
                 $order = Order::where(['user_id'=>$person->id,'status'=>0])->latest()->first();
 
@@ -66,7 +65,7 @@ class PaymentHelper
                         'receipt_no' => $mpesa->bill_ref_number,
                         'customer_id' => $person->id,
                         'phone' => $mpesa->msisdn,
-                        'booking_id' => $order->id,
+                        'order_id' => $order->id,
                         'amount' => $mpesa->trans_amount
                     ];
 
@@ -80,7 +79,7 @@ class PaymentHelper
                         $payment = Payment::create($data);
                     }
 
-                    //Update the booking
+                    //Update the order
                     $order->amount = ($order->amount - $payment->amount);
 
                     $order->status = $order->amount <= 0 ? 1 : 0;
@@ -92,6 +91,8 @@ class PaymentHelper
                 }
             }
         }
+
+        return null;
     }
 
 }
