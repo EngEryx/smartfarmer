@@ -29,7 +29,7 @@
                             <th>Amount</th>
                             <th>Other Details</th>
                             <th>Created On</th>
-                            <th>Action</th>
+                            {{--<th>Action</th>--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -50,9 +50,9 @@
                                     <td>
                                         {{ $payment->created_at }}
                                     </td>
-                                    <td>
-                                        <a href="#" class="btn btn-xs"> <i class="fa fa-eye"></i> View Payment</a>
-                                    </td>
+                                    {{--<td>--}}
+                                        {{--<a href="#" class="btn btn-xs"> <i class="fa fa-eye"></i> View Payment</a>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         </tbody>
