@@ -10,7 +10,7 @@ class Payment extends Model
 
     public function booking()
     {
-        return $this->hasOne(Order::class,'id','booking_id');
+        return $this->hasOne(Order::class,'id','order_id');
     }
 
     public function getBookingNameAttribute()
@@ -22,6 +22,5 @@ class Payment extends Model
     {
         return $this->booking->customer->name;
     }
-
 
 }
