@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('layouts.app')
 
 @section('content')
     <section class="home-slider"></section>
@@ -16,7 +16,7 @@
                 <div class="col-md-6 offset-3">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Feedback on Product or Service</h3>
+                            <h3>What you feel about or products</h3>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('feedback.save') }}" aria-label="{{ __('Register') }}">
@@ -26,8 +26,9 @@
                                     <label for="feed_type">Feedback type</label>
                                     <select class="form-control" name="feed_type" id="feed_type">
                                         <option selected disabled>-- Type  of Feedback -- </option>
-                                        <option value="1">Comment</option>
-                                        <option value="1">Suggestion</option>
+                                        <option value="1">Complaint</option>
+                                        <option value="2">Suggestion</option>
+                                        <option value="3">Appraisal</option>
                                     </select>
                                 </div>
 

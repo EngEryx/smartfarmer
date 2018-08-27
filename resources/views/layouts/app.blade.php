@@ -81,7 +81,7 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{url('fertilisers')}}">
+                            <a class="nav-link" href="{{url('machinery')}}">
                                 Machinery
                             </a>
                         </li>
