@@ -88,6 +88,10 @@ Route::group(['middleware'=>['auth','clients']],function(){
 
 Auth::routes();
 
+Route::group(['namespace' => 'Auth'], function(){
+    Route::get('registration/{token}/verify', 'RegisterController@verifyUser')->name('user.email.verify');
+});
+
 Route::get('/test', function(){
     session()->forget('customer_cart'.auth()->user()->id);
     return redirect()->back();
