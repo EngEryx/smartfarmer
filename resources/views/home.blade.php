@@ -68,7 +68,7 @@
                                         <td>{{$booking->id}}</td>
                                         <td>
                                             <ul>
-                                                @foreach($order->items as $cart_item)
+                                                @foreach($booking->items as $cart_item)
                                                     <li>
                                                         {{$cart_item['item']['name'] .' - '.($cart_item['item']['cost'].' x '.(int)$cart_item['quantity'])}}
                                                     </li>
