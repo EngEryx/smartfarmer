@@ -82,7 +82,7 @@
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="{{url('machinery')}}">
-                                Machinery
+                                Farm Tools
                             </a>
                         </li>
 

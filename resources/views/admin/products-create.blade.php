@@ -40,7 +40,7 @@
                                             <option selected disabled>-- Select Category Type --</option>
                                             <option value="1">Agro-Chemical</option>
                                             <option value="2">Seeds</option>
-                                            <option value="3">Machinery</option>
+                                            <option value="3">Farm Tools</option>
                                         </select>
                                         @if ($errors->has('category_type'))
                                             <span class="help-block">

@@ -66,9 +66,17 @@
                                 @foreach($bookings as $booking)
                                     <tr>
                                         <td>{{$booking->id}}</td>
-                                        <td>{{$booking->salonitem_name}}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach($order->items as $cart_item)
+                                                    <li>
+                                                        {{$cart_item['item']['name'] .' - '.($cart_item['item']['cost'].' x '.(int)$cart_item['quantity'])}}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
                                         <td>{!! $booking->status_text !!}</td>
-                                        <td>{!! $booking->price_text !!}</td>
+                                        <td>{!! $booking->cost !!}</td>
                                         <td>
                                             {{ $booking->created_at }}
                                         </td>

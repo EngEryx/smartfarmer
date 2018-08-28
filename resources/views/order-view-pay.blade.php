@@ -83,7 +83,7 @@
                                             <ol class="center">
                                                 <li>Go to M-PESA on your Phone</li>
                                                 <li>Select Send Money</li>
-                                                <li>Enter phone number : <strong>0700xxxx</strong></li>
+                                                <li>Enter phone number : <strong>0723811641</strong></li>
                                                 <li>Enter the amount, KSh.<strong>{!! $order->total_cost !!}</strong></li>
                                                 <li>Enter your M-PESA PIN and send</li>
                                                 <li>
